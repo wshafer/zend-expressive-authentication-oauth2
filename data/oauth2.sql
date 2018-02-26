@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS oauth_auth_codes;
 CREATE TABLE oauth_auth_codes (
     id VARCHAR(100),
     user_id INTEGER,
@@ -8,6 +9,7 @@ CREATE TABLE oauth_auth_codes (
     PRIMARY KEY(id)
 );
 
+DROP TABLE IF EXISTS oauth_access_tokens;
 CREATE TABLE oauth_access_tokens (
     id VARCHAR(100),
     user_id VARCHAR(40) NULL,
@@ -15,13 +17,16 @@ CREATE TABLE oauth_access_tokens (
     name VARCHAR(255) NULL,
     scopes TEXT NULL,
     revoked BOOLEAN,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    expires_at TIMESTAMP,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
+    expires_at TIMESTAMP NULL,
     PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS idx1_oauth_access_tokens;
 CREATE INDEX idx1_oauth_access_tokens ON oauth_access_tokens(user_id);
 
+DROP TABLE IF EXISTS oauth_refresh_tokens;
 CREATE TABLE oauth_refresh_tokens (
     id VARCHAR(100),
     access_token_id VARCHAR(100),
@@ -29,8 +34,11 @@ CREATE TABLE oauth_refresh_tokens (
     expires_at TIMESTAMP NULL,
     PRIMARY KEY(id)
 );
+
+DROP TABLE IF EXISTS idx1_oauth_refresh_tokens;
 CREATE INDEX idx1_oauth_refresh_tokens ON oauth_refresh_tokens(access_token_id);
 
+DROP TABLE IF EXISTS oauth_clients;
 CREATE TABLE oauth_clients (
     name VARCHAR(40) NOT NULL,
     user_id INTEGER NULL,
@@ -39,19 +47,25 @@ CREATE TABLE oauth_clients (
     personal_access_client BOOLEAN,
     password_client BOOLEAN,
     revoked BOOLEAN,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL,
     PRIMARY KEY (name)
 );
+
+DROP TABLE IF EXISTS idx1_oauth_clients;
 CREATE INDEX idx1_oauth_clients ON oauth_clients(user_id);
 
+DROP TABLE IF EXISTS oauth_personal_access_clients;
 CREATE TABLE oauth_personal_access_clients (
     client_id INTEGER,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
 );
+
+DROP TABLE IF EXISTS idx1_oauth_personal_access_clients;
 CREATE INDEX idx1_oauth_personal_access_clients ON oauth_personal_access_clients(client_id);
 
+DROP TABLE IF EXISTS oauth_users;
 CREATE TABLE oauth_users (
     username VARCHAR(40) NOT NULL,
     password VARCHAR(100) NOT NULL,
@@ -60,6 +74,7 @@ CREATE TABLE oauth_users (
     PRIMARY KEY (username)
 );
 
+DROP TABLE IF EXISTS oauth_scopes;
 CREATE TABLE oauth_scopes (
     id VARCHAR(30) NOT NULL,
     PRIMARY KEY (id)
