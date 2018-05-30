@@ -5,7 +5,7 @@ CREATE TABLE oauth_auth_codes (
     client_id INTEGER,
     scopes TEXT NULL,
     revoked BOOLEAN,
-    expires_at TIMESTAMP,
+    expires_at TIMESTAMP NULL,
     PRIMARY KEY(id)
 );
 
